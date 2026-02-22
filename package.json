@@ -1,0 +1,29 @@
+{
+  "name": "apex_rentals",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "prod": "cross-env NODE_ENV=production node server.js"
+  },
+  "keywords": [],
+  "author": "Nahid",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.13.5",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "cross-env": "^10.1.0",
+    "eslint": "^10.0.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.3.0"
+  }
+}
