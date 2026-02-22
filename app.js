@@ -1,27 +1,25 @@
 const express = require('express');
 const cors = require('cors');
-const client = require('./config/dbConnection');
+
+const globalErrorHandler = require('./middlewares/errorMiddleware');
+const AppError = require('./utils/appError');
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// ----- DATABASE
-async function run() {
-  try {
-    await client.connect();
-    await client.db('admin').command({ ping: 1 });
-    console.log('Successfully connected to MongoDB... 📑');
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-  }
-}
-run().catch(console.dir);
-
-// ----- Routes -----
+// ROUTES
 app.get('/', (req, res) => {
-  res.send(`<h1>Hero Assignment 11</h1>`);
+  res.send(`<h1>Apex Rentals API</h1>`);
 });
+
+app.all(/path: .*/, (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+// GLOBAL ERROR HANDLER
+app.use(globalErrorHandler);
 
 module.exports = app;
