@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const uri = process.env.DATABASE.replace(
@@ -14,20 +15,4 @@ const client = new MongoClient(uri, {
   },
 });
 
-let dbConnection;
-
-module.exports = {
-  connectToServer: async function () {
-    try {
-      await client.connect();
-      dbConnection = client.db('apex_rentals');
-      console.log('Successfully connected to MongoDB... 📑');
-    } catch (error) {
-      console.error('Error connecting to MongoDB:', error);
-    }
-  },
-
-  getDb: function () {
-    return dbConnection;
-  },
-};
+module.exports = client;

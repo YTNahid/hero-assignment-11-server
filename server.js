@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-const { connectToServer } = require('./config/db');
+const client = require('./config/db');
 
 dotenv.config({ path: './.env' });
 
@@ -9,7 +9,8 @@ const port = process.env.PORT || 5000;
 
 async function startServer() {
   try {
-    await connectToServer();
+    await client.connect();
+    console.log('Connected to MongoDB');
     app.listen(port, () => {
       console.log(`App running on port ${port}...`);
     });
