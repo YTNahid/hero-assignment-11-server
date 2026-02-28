@@ -51,7 +51,9 @@ exports.verifyToken = catchAsync(async (req, res, next) => {
     return next(new AppError('Please login or register first!', 401));
   }
 
-  await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+  req.user = decoded.id;
 
   next();
 });
