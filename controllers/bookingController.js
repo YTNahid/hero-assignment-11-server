@@ -8,19 +8,6 @@ const db = client.db('apex_rentals');
 const carsCollection = db.collection('cars');
 const bookingsCollection = db.collection('bookings');
 
-// Car Image: A small thumbnail of the booked car for easy
-// identification.
-// 2. Car Model: The car's make and model, e.g.,
-// Toyota Corolla 2023.
-// 3. Booking Date: The date and time the car was reserved (formatted
-// as
-// DD-MM-YYYY HH:MM).
-// 4. Total Price: The cost of the entire booking period, including
-// taxes/fees.
-// 5. Booking Status: Clearly display whether the booking is
-// confirmed,
-// pending, or canceled.
-
 // Get My Bookings
 exports.getMyBookings = catchAsync(async (req, res, next) => {
   const userId = req.user;
