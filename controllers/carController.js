@@ -2,13 +2,20 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const client = require('../config/db');
 const { ObjectId } = require('mongodb');
+const APIFeatures = require('../utils/APIFeatures');
 
 const db = client.db('apex_rentals');
 const carsCollection = db.collection('cars');
 
 // Get All Cars
 exports.getAllCars = catchAsync(async (req, res, next) => {
-  const result = await carsCollection.find({}).toArray();
+  const features = new APIFeatures(carsCollection, req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const result = await features.cursor.toArray();
 
   res.status(200).json({
     status: 'success',
@@ -39,9 +46,14 @@ exports.getOneCar = catchAsync(async (req, res, next) => {
 
 // Get My Cars
 exports.getMyCars = catchAsync(async (req, res, next) => {
-  const userId = req.user;
+  const baseFilter = { addedBy: req.user };
+  const features = new APIFeatures(carsCollection, req.query, baseFilter)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
 
-  const result = await carsCollection.find({ addedBy: userId }).toArray();
+  const result = await features.cursor.toArray();
 
   res.status(200).json({
     status: 'success',
