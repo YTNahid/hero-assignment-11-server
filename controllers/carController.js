@@ -131,7 +131,7 @@ exports.updateCar = catchAsync(async (req, res, next) => {
     { $set: updatedCarData }
   );
 
-  if (result.modifiedCount === 0) {
+  if (result.matchedCount === 0) {
     return next(new AppError('Car not found', 404));
   }
 
