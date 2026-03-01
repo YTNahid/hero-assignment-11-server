@@ -2,7 +2,6 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const client = require('../config/db');
 const { ObjectId } = require('mongodb');
-// const APIFeatures = require('../utils/APIFeatures');
 
 const db = client.db('apex_rentals');
 const carsCollection = db.collection('cars');
@@ -75,7 +74,7 @@ exports.addBooking = catchAsync(async (req, res, next) => {
 
   if (alreadyBooked) {
     return next(
-      new AppError('This car is already booked during this time period.', 400)
+      new AppError('This car is not available during this time period.', 400)
     );
   }
 
