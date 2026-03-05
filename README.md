@@ -6,7 +6,8 @@ This is the backend server for the Apex Rentals car rental service. It provides 
 
 ## Live URL
 
-[https://apexrentals.vercel.app/]
+API: [https://apexrentals.vercel.app/]
+Live Site: [https://apex-rentals-c43dc.web.app/]
 
 ## Key Features
 
