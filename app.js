@@ -14,7 +14,11 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: ['https://apex-rentals-c43dc.web.app', 'http://localhost:5173'],
+    origin: [
+      'https://apex-rentals-c43dc.firebaseapp.com',
+      'https://apex-rentals-c43dc.web.app',
+      'http://localhost:5173',
+    ],
     credentials: true,
   })
 );
