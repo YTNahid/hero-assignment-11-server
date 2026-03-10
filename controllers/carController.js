@@ -9,16 +9,17 @@ const carsCollection = db.collection('cars');
 
 // Get All Cars
 exports.getAllCars = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(carsCollection, req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+  const features = new APIFeatures(carsCollection, req.query).filter();
+
+  const total = await carsCollection.countDocuments(features.finalFilter);
+
+  features.sort().limitFields().paginate();
 
   const result = await features.cursor.toArray();
 
   res.status(200).json({
     status: 'success',
+    total,
     results: result.length,
     data: {
       data: result,
@@ -47,16 +48,22 @@ exports.getOneCar = catchAsync(async (req, res, next) => {
 // Get My Cars
 exports.getMyCars = catchAsync(async (req, res, next) => {
   const baseFilter = { addedBy: req.user };
-  const features = new APIFeatures(carsCollection, req.query, baseFilter)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+
+  const features = new APIFeatures(
+    carsCollection,
+    req.query,
+    baseFilter
+  ).filter();
+
+  const total = await carsCollection.countDocuments(features.finalFilter);
+
+  features.sort().limitFields().paginate();
 
   const result = await features.cursor.toArray();
 
   res.status(200).json({
     status: 'success',
+    total,
     results: result.length,
     data: {
       data: result,

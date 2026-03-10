@@ -4,6 +4,7 @@ class APIFeatures {
     this.queryString = queryString;
     this.baseFilter = baseFilter;
     this.cursor = null;
+    this.finalFilter = null;
   }
 
   filter() {
@@ -22,10 +23,9 @@ class APIFeatures {
       }
     }
 
-    const finalFilter = { ...urlFilters, ...this.baseFilter };
+    this.finalFilter = { ...urlFilters, ...this.baseFilter };
 
-    // 3. Create the cursor with the merged, secure filter
-    this.cursor = this.collection.find(finalFilter);
+    this.cursor = this.collection.find(this.finalFilter);
 
     return this;
   }
