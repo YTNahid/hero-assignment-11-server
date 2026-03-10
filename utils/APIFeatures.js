@@ -16,6 +16,12 @@ class APIFeatures {
 
     const urlFilters = JSON.parse(queryStr);
 
+    for (const key in urlFilters) {
+      if (typeof urlFilters[key] === 'string') {
+        urlFilters[key] = { $regex: urlFilters[key], $options: 'i' };
+      }
+    }
+
     const finalFilter = { ...urlFilters, ...this.baseFilter };
 
     // 3. Create the cursor with the merged, secure filter
